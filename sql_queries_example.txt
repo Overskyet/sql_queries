@@ -1,0 +1,21 @@
+---Вывести отсортированный по количеству перелетов (по убыванию) и имени (по возрастанию) список пассажиров, совершивших хотя бы 1 полет.---
+
+SELECT name, COUNT(name) as count FROM Passenger, Pass_in_trip WHERE Passenger.id=Pass_in_trip.passenger GROUP BY name ORDER BY count DESC, name;
+
+---------------------------------
+
+---Вывести вылеты, совершенные с 10 ч. по 14 ч. 1 января 1900 г.---
+
+SELECT * FROM Trip WHERE time_out>='1900-01-01T10:00:00.000Z' AND time_out<='1900-01-01T14:00:00.000Z';
+
+---------------------------------
+
+---Выведите нагруженность (число пассажиров) каждого рейса (trip). Результат вывести в отсортированном виде по убыванию нагруженности.---
+
+SELECT trip, COUNT(passenger) as count FROM Pass_in_trip GROUP BY trip ORDER BY count DESC;
+
+---------------------------------
+
+Добавить отзыв с рейтингом 5 на жилье, находящиеся по адресу "11218, Friel Place, New York", от имени "George Clooney"
+
+INSERT INTO Reviews SELECT COUNT(*) + 1, (SELECT Reservations.id FROM Reservations, Users, Rooms WHERE Reservations.user_id=Users.id AND Users.name="George Clooney" AND Reservations.room_id=Rooms.id AND Rooms.address="11218, Friel Place, New York"), 5 FROM Reviews;
